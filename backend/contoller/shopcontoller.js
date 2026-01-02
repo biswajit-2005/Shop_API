@@ -10,8 +10,27 @@ const getAllItems = async (req, res) => {
   }
 };
 
-//get items by id
+//get items by Name
 
+const getItembyName = async (req, res) => {
+  const Name = req.params.name;
+  try {
+    const requireditem = await item.findOne({ name: name });
+    if (!requireditem) {
+      res.json({ message: "item not found" });
+    } else {
+      res.status(200).json({
+        messege: "item fetched successfully",
+        data: requireditem,
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      message: "cannot fetch item .",
+      error: error.message,
+    });
+  }
+};
 //add item
 const addItem = async (req, res) => {
   try {
@@ -29,4 +48,4 @@ const addItem = async (req, res) => {
   }
 };
 
-module.exports = { getAllItems, addItem };
+module.exports = { getAllItems, addItem, getItembyName };
